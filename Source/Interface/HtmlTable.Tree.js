@@ -79,24 +79,23 @@ HtmlTable = Class.refactor(HtmlTable, {
 		}
 		this.element.addEvent('click:relay(a.' + this.options.expandClass + ')', this._treeBound.toggleExpand);
 		this.element.addEvent('click', this._treeBound.activateKeyboard);
-		(function(){
-			if (this.options.useKeyboard && this.keyboard) {
-				this.keyboard.addShortcuts({
-					'Expand Section': {
-						keys: 'right',
-						shortcut: 'right arrow',
-						handler: this._treeBound.keyExpand,
-						description: 'Expand the current row.'
-					},
-					'Close Section': {
-						keys: 'left',
-						shortcut: 'left arrow',
-						handler: this._treeBound.keyClose,
-						description: 'Close the current row.'
-					}
-				});
-			}
-		}).delay(10, this);
+		if (this.options.useKeyboard && this.keyboard) {
+			if (!this.keyboard) this.keyboard = new Keyboard();
+			this.keyboard.addShortcuts({
+				'Expand Section': {
+					keys: 'right',
+					shortcut: 'right arrow',
+					handler: this._treeBound.keyExpand,
+					description: 'Expand the current row.'
+				},
+				'Close Section': {
+					keys: 'left',
+					shortcut: 'left arrow',
+					handler: this._treeBound.keyClose,
+					description: 'Close the current row.'
+				}
+			});
+		}
 		return this;
 	},
 
