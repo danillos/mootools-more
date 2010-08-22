@@ -278,15 +278,15 @@ table tr.selected td, table tr.table-tr-selected td, table tr.selected td a, tab
 <script src="/depender/build?require=More/HtmlTable.Tree,More/HtmlTable.Zebra,Core/Selectors,More/HtmlTable.Select"></script>
 <script>
 var table = new HtmlTable($('tree'), {
+	enableTree: true,
 	selectable: true
 });
 var table2 = new HtmlTable($('tree2'), {
+	enableTree: true,
+	selectable: true,
 	noBuild: true
 });
 table.keyboard.activate();
-$(document.body).addEvent('click:relay(table)', function(e, tbl){
-	tbl.retrieve('HtmlTable').keyboard.activate();
-});
 
 $('addRow').addEvent('click', function(e){
 	e.stop();

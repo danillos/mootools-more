@@ -58,6 +58,9 @@ HtmlTable = Class.refactor(HtmlTable, {
 		if (!this._treeBound) {
 			this._treeBound = {
 				toggleExpand: this._toggleExpandHandler.bind(this),
+				activateKeyboard: function() {
+					if (this.keyboard) this.keyboard.activate();
+				}.bind(this),
 				keyExpand: function(){
 					if (this._focused) this.expandSection(this._focused);
 				}.bind(this),
@@ -75,6 +78,7 @@ HtmlTable = Class.refactor(HtmlTable, {
 			};
 		}
 		this.element.addEvent('click:relay(a.' + this.options.expandClass + ')', this._treeBound.toggleExpand);
+		this.element.addEvent('click', this._treeBound.activateKeyboard);
 		(function(){
 			if (this.options.useKeyboard && this.keyboard) {
 				this.keyboard.addShortcuts({
@@ -98,6 +102,7 @@ HtmlTable = Class.refactor(HtmlTable, {
 
 	disableTree: function(){
 		this.element.removeEvent('click:relay(a.' + this.options.expandClass + ')', this._treeBound.toggleExpand);
+		this.element.removeEvent('click', this.bound.activateKeyboard);
 		return this;
 	},
 

@@ -46,7 +46,10 @@ HtmlTable = Class.refactor(HtmlTable, {
 		this._selectedRows = new Elements();
 		this._bound = {
 			mouseleave: this._mouseleave.bind(this),
-			clickRow: this._clickRow.bind(this)
+			clickRow: this._clickRow.bind(this),
+			activateKeyboard: function() {
+				if (this.keyboard && this._selectEnabled) this.keyboard.activate();
+			}.bind(this)
 		};
 		if (this.options.selectable) this.enableSelect();
 	},
@@ -210,7 +213,8 @@ HtmlTable = Class.refactor(HtmlTable, {
 		attach = $pick(attach, true);
 		var method = attach ? 'addEvents' : 'removeEvents';
 		this.element[method]({
-			mouseleave: this._bound.mouseleave
+			mouseleave: this._bound.mouseleave,
+			click: this._bound.activateKeyboard
 		});
 		this.body[method]({
 			'click:relay(tr)': this._bound.clickRow,
